@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm start --prefix frontend\" \"npm start --prefix backend\"",
     "server": "cd backend && nodemon server.js",
     "client": "cd frontend && npm start"
   },
