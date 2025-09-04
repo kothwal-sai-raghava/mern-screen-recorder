@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { Circle, Square, Download, Upload, List } from "lucide-react";
 import axios from "axios";
 
+const API_BASE = "https://mern-screen-recorder-ksr.onrender.com";
+
 export default function RecorderApp() {
   const [recording, setRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
@@ -81,7 +83,7 @@ export default function RecorderApp() {
     formData.append("video", blob, "recording.webm");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/recordings", formData, {
+      const res = await axios.post(`${API_BASE}/api/recordings`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setMessage("✅ Uploaded successfully!");
@@ -95,7 +97,7 @@ export default function RecorderApp() {
   // Fetch recordings list
   const fetchRecordings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/recordings");
+      const res = await axios.get(`${API_BASE}/api/recordings`);
       setRecordings(res.data);
     } catch (err) {
       console.error("Error fetching recordings:", err);
