@@ -6,9 +6,12 @@ const fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// Replace with your deployed frontend URL for CORS
+app.use(cors({
+  origin: "https://mern-screen-recorder-lyart.vercel.app"
+}));
 app.use(express.json());
 
 // Ensure uploads folder exists
@@ -61,10 +64,14 @@ app.post("/api/recordings", upload.single("video"), (req, res) => {
 app.get("/api/recordings", (req, res) => {
   db.all(`SELECT * FROM recordings ORDER BY createdAt DESC`, [], (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
+
+    // Change localhost to your Render backend URL
+    const backendURL = "https://mern-screen-recorder-ksr.onrender.com";
+
     res.json(
       rows.map((r) => ({
         ...r,
-        url: `http://localhost:${PORT}/api/recordings/${r.id}`,
+        url: `${backendURL}/api/recordings/${r.id}`,
       }))
     );
   });
@@ -82,5 +89,5 @@ app.get("/api/recordings/:id", (req, res) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`✅ Backend running on http://localhost:${PORT}`)
+  console.log(`Backend running on http://localhost:${PORT}`)
 );

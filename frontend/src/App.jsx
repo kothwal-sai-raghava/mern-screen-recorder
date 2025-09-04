@@ -86,11 +86,11 @@ export default function RecorderApp() {
       const res = await axios.post(`${API_BASE}/api/recordings`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setMessage("✅ Uploaded successfully!");
+      setMessage("Uploaded successfully!");
       console.log("Upload response:", res.data);
     } catch (err) {
       console.error("Upload error:", err);
-      setMessage("❌ Upload failed.");
+      setMessage("Upload failed.");
     }
   };
 
